@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Print Gallery | Каталог товаров</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0c0c0c 0%, #1a1a1a 100%);
+            min-height: 100vh;
+            color: #ffffff;
+        }
+        
+        .header {
+            background: rgba(30, 30, 30, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #333;
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 300;
+            letter-spacing: 1px;
+            color: #ffffff;
+        }
+        
+        .logo span {
+            color: #b0b0b0;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+        
+        nav ul li a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            font-size: 1rem;
+        }
+        
+        nav ul li a:hover {
+            color: #b0b0b0;
+        }
+        
+        .user-info {
+            color: #888;
+            font-size: 0.9rem;
+        }
+        
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                        url('https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            border-radius: 12px;
+            padding: 80px 40px;
+            text-align: center;
+            margin-bottom: 40px;
+            border: 1px solid #333;
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            font-weight: 300;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            color: #e0e0e0;
+            line-height: 1.6;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: #ffffff;
+            color: #000000;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            font-size: 1rem;
+        }
+        
+        .btn:hover {
+            background: #e0e0e0;
+            transform: translateY(-2px);
+        }
+        
+        .section-title {
+            color: #ffffff;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+            font-weight: 500;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 2px;
+            background: #ffffff;
+        }    
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+        
+        .product-card {
+            background: #1e1e1e;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #333;
+            transition: all 0.3s ease;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            border-color: #555;
+        }
+        
+        .product-img {
+            height: 200px;
+            background: #2d2d2d;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .product-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .product-card:hover .product-img img {
+            transform: scale(1.05);
+        }
+        
+        .product-info {
+            padding: 20px;
+        }
+        
+        .product-title {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: #ffffff;
+            font-weight: 500;
+        }
+        
+        .product-description {
+            color: #b0b0b0;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        
+        .product-price {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 15px;
+        }
+        
+        .about {
+            background: #1e1e1e;
+            border-radius: 12px;
+            padding: 40px;
+            margin-bottom: 40px;
+            border: 1px solid #333;
+        }
+        
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+        
+        .about-text {
+            flex: 1;
+        }
+        
+        .about-text h2 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+        
+        .about-text p {
+            margin-bottom: 20px;
+            color: #b0b0b0;
+            line-height: 1.6;
+        }
+        
+        .about-image {
+            flex: 1;
+            height: 350px;
+            background: #2d2d2d;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .about-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .contact {
+            background: #1e1e1e;
+            border-radius: 12px;
+            padding: 40px;
+            margin-bottom: 40px;
+            border: 1px solid #333;
+        }
+        
+        .contact-content {
+            display: flex;
+            gap: 40px;
+        }
+        
+        .contact-info {
+            flex: 1;
+        }
+        
+        .contact-info h3 {
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            color: #ffffff;
+            font-weight: 500;
+        }
+        
+        .contact-info p {
+            margin-bottom: 15px;
+            color: #b0b0b0;
+        }
+        
+        .contact-form {
+            flex: 1;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #ffffff;
+        }
+        
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            background: #2d2d2d;
+            border: 1px solid #404040;
+            border-radius: 8px;
+            color: #ffffff;
+            font-size: 1rem;
+        }
+        
+        .form-group textarea {
+            height: 120px;
+            resize: vertical;
+        }
+        
+        footer {
+            background: rgba(30, 30, 30, 0.95);
+            border-top: 1px solid #333;
+            padding: 40px 0;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+        
+        .footer-column {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-column h3 {
+            color: #ffffff;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+        
+        .footer-column p, .footer-column ul {
+            color: #b0b0b0;
+            line-height: 1.6;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column ul li a {
+            color: #b0b0b0;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-column ul li a:hover {
+            color: #ffffff;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #333;
+            color: #888;
+            font-size: 0.9rem;
+        }
+        
+        /* ===== ОСНОВНЫЕ ИЗМЕНЕНИЯ ДЛЯ МОБИЛЬНОЙ ВЕРСИИ ===== */
+        
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            nav ul {
+                gap: 15px;
+            }
+            
+            .hero {
+                padding: 50px 20px;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .about-content, .contact-content {
+                flex-direction: column;
+            }
+            
+            .about-image {
+                order: -1;
+            }
+            
+            /* Для планшетов - 2 или 3 товара в строке */
+            .products {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+        }
+        
+        /* ===== ДЛЯ МАЛЕНЬКИХ МОБИЛЬНЫХ (2 ТОВАРА В СТРОКЕ) ===== */
+        @media (max-width: 480px) {
+            .products {
+                grid-template-columns: repeat(2, 1fr); /* Фиксированно 2 колонки */
+                gap: 15px;
+            }
+            
+            .product-card {
+                margin-bottom: 10px;
+                min-height: 350px; /* Гарантируем одинаковую высоту */
+            }
+            
+            .product-img {
+                height: 150px; /* Немного уменьшаем высоту картинки */
+            }
+            
+            .product-info {
+                padding: 15px;
+            }
+            
+            .product-title {
+                font-size: 1rem;
+                margin-bottom: 8px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+            
+            .product-description {
+                font-size: 0.8rem;
+                margin-bottom: 10px;
+                display: -webkit-box;
+                -webkit-line-clamp: 3; /* Ограничиваем описание 3 строками */
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+            }
+            
+            .product-price {
+                font-size: 1.1rem;
+                margin-bottom: 10px;
+            }
+            
+            .btn {
+                padding: 10px 15px;
+                font-size: 0.9rem;
+                width: 100%;
+            }
+            
+            .filter-btn {
+                padding: 8px 15px;
+                font-size: 0.85rem;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+            
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+        }
+        
+        /* ===== ДЛЯ ОЧЕНЬ МАЛЕНЬКИХ ЭКРАНОВ ===== */
+        @media (max-width: 360px) {
+            .products {
+                grid-template-columns: 1fr; /* 1 товар в строке на очень маленьких экранах */
+            }
+            
+            .product-card {
+                min-height: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Шапка -->
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo">
+                <h1>3D Print <span>Gallery</span></h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#catalog">Каталог</a></li>
+                    <li><a href="#about">О нас</a></li>
+                    <li><a href="#contact">Контакты</a></li>
+                </ul>
+            </nav>
+            <div class="user-info">
+                Качественная 3D-печать
+            </div>
+        </div>
+    </header>
+
+    <!-- Основной контент -->
+    <div class="main-container">
+        <!-- Герой секция -->
+        <section class="hero">
+            <h1>Уникальные изделия, созданные на 3D-принтере</h1>
+            <p>Откройте для себя мир инновационных решений и креативных дизайнов, напечатанных с высочайшей точностью</p>
+            <a href="#catalog" class="btn">Смотреть каталог</a>
+        </section>
+
+        <!-- Каталог товаров -->
+        <section id="catalog">
+            <h2 class="section-title">Наши товары</h2>
+            
+            <div class="products">
+                <!-- Товар 1 -->
+                <div class="product-card">
+                    <div class="product-img">
+                        <img src="https://images.unsplash.com/photo-1563089145-599997674d42?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Геометрическая ваза">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Геометрическая ваза</h3>
+                        <p class="product-description">Стильная ваза с уникальным геометрическим узором, идеально подходит для современного интерьера.</p>
+                        <div class="product-price">1 200 руб.</div>
+                        <button class="btn">Подробнее</button>
+                    </div>
+                </div>
+                
+                <!-- Товар 2 -->
+                <div class="product-card">
+                    <div class="product-img">
+                        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Держатель для наушников">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Держатель для наушников</h3>
+                        <p class="product-description">Эргономичный держатель для наушников, который сохранит порядок на вашем рабочем столе.</p>
+                        <div class="product-price">850 руб.</div>
+                        <button class="btn">Подробнее</button>
+                    </div>
+                </div>
+                
+                <!-- Товар 3 -->
+                <div class="product-card">
+                    <div class="product-img">
+                        <img src="https://images.unsplash.com/photo-1581784368655-0f72a63d8f2e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Органайзер для инструментов">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Органайзер для инструментов</h3>
+                        <p class="product-description">Практичный органайзер с отделениями для различных инструментов и мелочей.</p>
+                        <div class="product-price">1 500 руб.</div>
+                        <button class="btn">Подробнее</button>
+                    </div>
+                </div>
+                
+                <!-- Товар 4 -->
+                <div class="product-card">
+                    <div class="product-img">
+                        <img src="https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Архитектурная модель">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Архитектурная модель</h3>
+                        <p class="product-description">Детализированная модель современного здания, отличный подарок для архитекторов и дизайнеров.</p>
+                        <div class="product-price">2 300 руб.</div>
+                        <button class="btn">Подробнее</button>
+                    </div>
+                </div>
+                
+                <!-- Товар 5 -->
+                <div class="product-card">
+                    <div class="product-img">
+                        <img src="https://images.unsplash.com/photo-1598301257982-0cf01499abb2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Светильник">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">3D светильник</h3>
+                        <p class="product-description">Уникальный светильник с трехмерной структурой, создающий интересные световые эффекты.</p>
+                        <div class="product-price">3 500 руб.</div>
+                        <button class="btn">Подробнее</button>
+                    </div>
+                </div>
+                
+                <!-- Товар 6 -->
+                <div class="product-card">
+                    <div class="product-img">
+                        <img src="https://images.unsplash.com/photo-1546868871-7041f2a55e12?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Док-станция для телефона">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Док-станция для телефона</h3>
+                        <p class="product-description">Стильная док-станция с возможностью беспроводной зарядки и отделением для мелочей.</p>
+                        <div class="product-price">1 800 руб.</div>
+                        <button class="btn">Подробнее</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- О компании -->
+        <section class="about" id="about">
+            <h2 class="section-title">О нашей компании</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>Мы специализируемся на создании уникальных изделий с использованием передовых технологий 3D-печати. Наша команда дизайнеров и инженеров работает над тем, чтобы превратить ваши идеи в реальность.</p>
+                    <p>Мы используем только качественные материалы и современное оборудование, что позволяет нам создавать продукты с высокой детализацией и долговечностью.</p>
+                    <a href="#contact" class="btn">Связаться с нами</a>
+                </div>
+                <div class="about-image">
+                    <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Наше производство">
+                </div>
+            </div>
+        </section>
+
+        <!-- Контакты -->
+        <section class="contact" id="contact">
+            <h2 class="section-title">Контакты</h2>
+            
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3>Свяжитесь с нами</h3>
+                    <p>Телефон: +7 (999) 123-45-67</p>
+                    <p>Email: info@3dprintgallery.ru</p>
+                    <p>Адрес: г. Москва, ул. Технологическая, д. 15</p>
+                    <p>Режим работы: Пн-Пт: 9:00-18:00</p>
+                </div>
+                
+                <div class="contact-form">
+                    <form method="POST" action="/tg_attach">
+                        <div class="form-group">
+                            <label for="name">Ваше имя</label>
+                            <input name="name" type="text" id="name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" name="email" id="email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">Сообщение</label>
+                            <textarea id="message" name="mesg" required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn">Отправить сообщение</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Подвал -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>3D Print Gallery</h3>
+                <p>Создаем уникальные изделия с помощью 3D-печати. Качество, инновации и креативность.</p>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Категории</h3>
+                <ul>
+                    <li><a href="#">Декор</a></li>
+                    <li><a href="#">Гаджеты</a></li>
+                    <li><a href="#">Инструменты</a></li>
+                    <li><a href="#">Модели</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Полезные ссылки</h3>
+                <ul>
+                    <li><a href="#catalog">Каталог</a></li>
+                    <li><a href="#about">О нас</a></li>
+                    <li><a href="#contact">Контакты</a></li>
+                    <li><a href="#">Доставка и оплата</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2023 3D Print Gallery. Все права защищены.</p>
+        </div>
+    </footer>
+</body>
+</html>
