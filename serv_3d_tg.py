@@ -1,6 +1,7 @@
 import os
 from flask import Flask, render_template, request, redirect, url_for, jsonify
 import telebot
+from telebot.types import ReplyKeyboardMarkup, KeyboardButton
 import threading
 import queue
 import time
@@ -18,44 +19,48 @@ def run_telegram_bot():
     
     @telegram_bot.message_handler(commands=['start', 'help'])
     def send_welcome(message):
-        chat_id = str(message.chat.id)  # Преобразуем в строку
+        chat_id = str(message.chat.id)
         aa = open("id_tg.txt", "r", encoding="utf-8")
         existing_ids = aa.readlines()
-        aa.close()
-        
-        # Проверяем, есть ли уже этот chat_id в файле
+        aa.close()        
+        keyboard = ReplyKeyboardMarkup()
+        btn = KeyboardButton("Посмотреть статистику заходов")
+        keyboard.add(btn)
         chat_id_with_newline = chat_id + "\n"
         if chat_id_with_newline not in existing_ids:
             aa = open("id_tg.txt", "a", encoding="utf-8")
             aa.write(chat_id + "\n")
             aa.close()
             print(f"Новый chat_id сохранен: {chat_id}")
-            telegram_bot.reply_to(message, "Бот запущен и готов получать сообщения с сайта!")
+            telegram_bot.reply_to(message, "Бот запущен и готов получать сообщения с сайта!",reply_markup=keyboard)
         else:
-            telegram_bot.reply_to(message, "Вы уже зарегистрированы! Бот готов получать сообщения с сайта!")
+            telegram_bot.reply_to(message, "Вы уже зарегистрированы! Бот готов получать сообщения с сайта!",reply_markup=keyboard)
     
     def process_queue():
         while True:
             try:
+                @telegram_bot.message_handler(func=filterr)
+                def start_converstion_nuer(message):
+                    aa=open("analiz.txt","r")
+                    statik=aa.readlines()
+                    print(statik)
+                    aa.close()
+                    statik_return=""
+                    for z in statik:
+                        statik_return+=z
+                    telegram_bot.send_message(message.chat.id,statik_return)
                 message_text = message_queue.get(timeout=1)
                 if message_text:
                     aa = open("id_tg.txt", "r", encoding="utf-8")
                     chat_ids = aa.readlines()
                     aa.close()
-                    
-                    # Очищаем chat_ids от символов \n и пустых строк
-                    #chat_ids = [chat_id.strip() for chat_id in chat_ids_raw if chat_id.strip()]
-                    
                     print(f"Отправка {len(chat_ids)} пользователям: {message_text}")
                     
                     for chat_id in chat_ids:
                         try:
-                            telegram_bot.send_message(int(chat_id), message_text)  # Преобразуем обратно в int
+                            telegram_bot.send_message(int(chat_id), message_text)
                         except Exception as e:
                             print(f"Ошибка отправки в {chat_id}: {e}")
-                            # Можно опционально удалять невалидные chat_id из файла
-                            # if "chat not found" in str(e) or "Forbidden" in str(e):
-                            #     remove_invalid_chat_id(chat_id)
                 
                 message_queue.task_done()
             except queue.Empty:
@@ -65,7 +70,9 @@ def run_telegram_bot():
     
     print("Telegram бот запускается...")
     telegram_bot.infinity_polling()
-
+def filterr(message):
+    if message.text=="Посмотреть статистику заходов":
+        return True
 @app.route('/')
 def index():
     analitik()
