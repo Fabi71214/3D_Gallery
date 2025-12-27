@@ -79,7 +79,7 @@
         
         .hero {
             background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
-                        url('https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+                        url('/static/ing_tovar/j1s-banner.jpg');
             background-size: cover;
             background-position: center;
             border-radius: 12px;
@@ -140,6 +140,7 @@
             height: 2px;
             background: #ffffff;
         }    
+        
         .products {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -153,6 +154,9 @@
             overflow: hidden;
             border: 1px solid #333;
             transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
         }
         
         .product-card:hover {
@@ -162,7 +166,7 @@
         }
         
         .product-img {
-            height: 200px;
+            height: 250px; /* Увеличил высоту фото */
             background: #2d2d2d;
             display: flex;
             align-items: center;
@@ -173,7 +177,7 @@
         .product-img img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: cover; /* Вернул cover */
             transition: transform 0.5s;
         }
         
@@ -183,6 +187,20 @@
         
         .product-info {
             padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            height: 60%;
+        }
+        
+        .product-info .btn {
+            margin-top: auto;
+            width: 100%;
+            text-align: center;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
         .product-title {
@@ -194,9 +212,11 @@
         
         .product-description {
             color: #b0b0b0;
-            margin-bottom: 15px;
             font-size: 0.9rem;
             line-height: 1.5;
+            flex-grow: 1;
+            min-height: 72px;
+             /* Уменьшил отступ снизу */
         }
         
         .product-price {
@@ -204,6 +224,10 @@
             font-weight: 600;
             color: #ffffff;
             margin-bottom: 15px;
+            min-height: 30px;
+            display: flex;
+            align-items: center;
+            /* Убрал margin-top */
         }
         
         .about {
@@ -396,7 +420,6 @@
                 order: -1;
             }
             
-            /* Для планшетов - 2 или 3 товара в строке */
             .products {
                 grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             }
@@ -405,17 +428,17 @@
         /* ===== ДЛЯ МАЛЕНЬКИХ МОБИЛЬНЫХ (2 ТОВАРА В СТРОКЕ) ===== */
         @media (max-width: 480px) {
             .products {
-                grid-template-columns: repeat(2, 1fr); /* Фиксированно 2 колонки */
+                grid-template-columns: repeat(2, 1fr);
                 gap: 15px;
             }
             
             .product-card {
                 margin-bottom: 10px;
-                min-height: 350px; /* Гарантируем одинаковую высоту */
+                min-height: 350px;
             }
             
             .product-img {
-                height: 150px; /* Немного уменьшаем высоту картинки */
+                height: 160px; /* Увеличил на мобильных */
             }
             
             .product-info {
@@ -432,27 +455,31 @@
             
             .product-description {
                 font-size: 0.8rem;
-                margin-bottom: 10px;
+                margin-bottom: 6px; /* Уменьшил на мобильных */
                 display: -webkit-box;
-                -webkit-line-clamp: 3; /* Ограничиваем описание 3 строками */
+                -webkit-line-clamp: 3;
                 -webkit-box-orient: vertical;
                 overflow: hidden;
+                min-height: 57px;
             }
             
             .product-price {
                 font-size: 1.1rem;
                 margin-bottom: 10px;
+                min-height: 25px;
+            }
+            
+            .product-info .btn {
+                padding: 10px 15px;
+                font-size: 0.9rem;
+                width: 100%;
+                min-height: 40px;
             }
             
             .btn {
                 padding: 10px 15px;
                 font-size: 0.9rem;
                 width: 100%;
-            }
-            
-            .filter-btn {
-                padding: 8px 15px;
-                font-size: 0.85rem;
             }
             
             .section-title {
@@ -471,7 +498,7 @@
         /* ===== ДЛЯ ОЧЕНЬ МАЛЕНЬКИХ ЭКРАНОВ ===== */
         @media (max-width: 360px) {
             .products {
-                grid-template-columns: 1fr; /* 1 товар в строке на очень маленьких экранах */
+                grid-template-columns: 1fr;
             }
             
             .product-card {
@@ -485,7 +512,7 @@
     <header class="header">
         <div class="nav-container">
             <div class="logo">
-                <h1>3D Print <span>Gallery</span></h1>
+                <h1>3D<span>Gallery</span></h1>
             </div>
             <nav>
                 <ul>
@@ -505,7 +532,7 @@
         <!-- Герой секция -->
         <section class="hero">
             <h1>Уникальные изделия, созданные на 3D-принтере</h1>
-            <p>Откройте для себя мир инновационных решений и креативных дизайнов, напечатанных с высочайшей точностью</p>
+            <p>Откройте для себя мир инновационных решений и креативных дизайнов</p>
             <a href="#catalog" class="btn">Смотреть каталог</a>
         </section>
 
@@ -517,78 +544,78 @@
                 <!-- Товар 1 -->
                 <div class="product-card">
                     <div class="product-img">
-                        <img src="https://images.unsplash.com/photo-1563089145-599997674d42?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Геометрическая ваза">
+                        <img src="/static/ing_tovar/20251221_162553.jpg" alt="Геометрическая ваза">
                     </div>
                     <div class="product-info">
-                        <h3 class="product-title">Геометрическая ваза</h3>
-                        <p class="product-description">Стильная ваза с уникальным геометрическим узором, идеально подходит для современного интерьера.</p>
-                        <div class="product-price">1 200 руб.</div>
-                        <button class="btn">Подробнее</button>
+                        <h3 class="product-title">Фигурка «Силуэт дуэта»</h3>
+                        <p class="product-description">Стильная 3D-статуэтка с абстрактными фигурами, создающими форму сердца. Универсальный элемент декора для дома или офиса.</p>
+                        <div class="product-price">390 руб.</div>
+                        <button class="btn">Купить</button>
                     </div>
                 </div>
                 
                 <!-- Товар 2 -->
                 <div class="product-card">
                     <div class="product-img">
-                        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Держатель для наушников">
+                        <img src="/static/ing_tovar/20251221_163659.jpg" alt="Держатель для наушников">
                     </div>
                     <div class="product-info">
-                        <h3 class="product-title">Держатель для наушников</h3>
-                        <p class="product-description">Эргономичный держатель для наушников, который сохранит порядок на вашем рабочем столе.</p>
-                        <div class="product-price">850 руб.</div>
-                        <button class="btn">Подробнее</button>
+                        <h3 class="product-title">Фигурка «Элегия кошки»</h3>
+                        <p class="product-description">Фигурка кошки, созданная на 3D-принтере. Компактная, но очень выразительная. Идеальный мини-декор для дома или офиса.</p>
+                        <div class="product-price">370 руб.</div>
+                        <button class="btn">Купить</button>
                     </div>
                 </div>
                 
                 <!-- Товар 3 -->
                 <div class="product-card">
                     <div class="product-img">
-                        <img src="https://images.unsplash.com/photo-1581784368655-0f72a63d8f2e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Органайзер для инструментов">
+                        <img src="/static/ing_tovar/20251221_164013.jpg" alt="Органайзер для инструментов">
                     </div>
                     <div class="product-info">
-                        <h3 class="product-title">Органайзер для инструментов</h3>
-                        <p class="product-description">Практичный органайзер с отделениями для различных инструментов и мелочей.</p>
-                        <div class="product-price">1 500 руб.</div>
-                        <button class="btn">Подробнее</button>
+                        <h3 class="product-title">Фигурка «Хомяк»</h3>
+                        <p class="product-description">Фигурка хомяка, напечатанная на 3D-принтере. Поставьте на полку, рабочий стол или витрину — и пространство заиграет новыми красками!</p>
+                        <div class="product-price">350 руб.</div>
+                        <button class="btn">Купить</button>
                     </div>
                 </div>
                 
                 <!-- Товар 4 -->
                 <div class="product-card">
                     <div class="product-img">
-                        <img src="https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Архитектурная модель">
+                        <img src="/static/ing_tovar/20251221_164514.jpg" alt="Архитектурная модель">
                     </div>
                     <div class="product-info">
-                        <h3 class="product-title">Архитектурная модель</h3>
-                        <p class="product-description">Детализированная модель современного здания, отличный подарок для архитекторов и дизайнеров.</p>
-                        <div class="product-price">2 300 руб.</div>
-                        <button class="btn">Подробнее</button>
+                        <h3 class="product-title">Лампа из «Minecraft»</h3>
+                        <p class="product-description">Ночник в стиле Minecraft — идеальный подарок для любителя игры. Компактная лампа с электронной свечкой добавит уюта и перенесёт в мир кубических приключений.</p>
+                        <div class="product-price">389 руб.</div>
+                        <button class="btn">Купить</button>
                     </div>
                 </div>
                 
                 <!-- Товар 5 -->
                 <div class="product-card">
                     <div class="product-img">
-                        <img src="https://images.unsplash.com/photo-1598301257982-0cf01499abb2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Светильник">
+                        <img src="/static/ing_tovar/20251221_165037.jpg" alt="Светильник">
                     </div>
                     <div class="product-info">
-                        <h3 class="product-title">3D светильник</h3>
-                        <p class="product-description">Уникальный светильник с трехмерной структурой, создающий интересные световые эффекты.</p>
-                        <div class="product-price">3 500 руб.</div>
-                        <button class="btn">Подробнее</button>
+                        <h3 class="product-title">Лампа в Китайском стиле</h3>
+                        <p class="product-description">Декоративный свет с восточным шармом: фонарь в китайском стиле, изготовленный на 3D-принтере. Станет стильным элементом вашего интерьера.</p>
+                        <div class="product-price">399 руб.</div>
+                        <button class="btn">Купить</button>
                     </div>
                 </div>
                 
                 <!-- Товар 6 -->
                 <div class="product-card">
                     <div class="product-img">
-                        <img src="https://images.unsplash.com/photo-1546868871-7041f2a55e12?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Док-станция для телефона">
+                        <img src="/static/ing_tovar/20251221_165418.jpg" alt="Док-станция для телефона">
                     </div>
                     <div class="product-info">
-                        <h3 class="product-title">Док-станция для телефона</h3>
-                        <p class="product-description">Стильная док-станция с возможностью беспроводной зарядки и отделением для мелочей.</p>
-                        <div class="product-price">1 800 руб.</div>
-                        <button class="btn">Подробнее</button>
+                        <h3 class="product-title">Фигурка «Разлом»</h3>
+                        <p class="product-description">Фигурка «Разлом» — необычный декоративный элемент, напечатанный на 3D принтере. Отлично подойдёт для полки или стола, добавит интерьеру индивидуальности без лишних деталей.</p>
+                        <div class="product-price">499 руб.</div>
+                        <button class="btn">Купить</button>
                     </div>
                 </div>
             </div>
@@ -603,9 +630,7 @@
                     <p>Мы используем только качественные материалы и современное оборудование, что позволяет нам создавать продукты с высокой детализацией и долговечностью.</p>
                     <a href="#contact" class="btn">Связаться с нами</a>
                 </div>
-                <div class="about-image">
-                    <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Наше производство">
-                </div>
+                
             </div>
         </section>
 
@@ -653,30 +678,10 @@
                 <h3>3D Print Gallery</h3>
                 <p>Создаем уникальные изделия с помощью 3D-печати. Качество, инновации и креативность.</p>
             </div>
-            
-            <div class="footer-column">
-                <h3>Категории</h3>
-                <ul>
-                    <li><a href="#">Декор</a></li>
-                    <li><a href="#">Гаджеты</a></li>
-                    <li><a href="#">Инструменты</a></li>
-                    <li><a href="#">Модели</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-column">
-                <h3>Полезные ссылки</h3>
-                <ul>
-                    <li><a href="#catalog">Каталог</a></li>
-                    <li><a href="#about">О нас</a></li>
-                    <li><a href="#contact">Контакты</a></li>
-                    <li><a href="#">Доставка и оплата</a></li>
-                </ul>
-            </div>
         </div>
         
         <div class="copyright">
-            <p>&copy; 2023 3D Print Gallery. Все права защищены.</p>
+            <p>&copy; 2026 3D Gallery. Все права защищены.</p>
         </div>
     </footer>
 </body>
