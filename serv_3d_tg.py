@@ -151,4 +151,4 @@ if __name__ == '__main__':
     threading.Thread(target=run_telegram_bot, daemon=True).start()
     time.sleep(2)
     
-    app.run(host='0.0.0.0', port=5000, debug=False, use_reloader=False)
+    app.run(host='0.0.0.0', port=5454, debug=False, use_reloader=False)

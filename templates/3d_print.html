@@ -22,7 +22,7 @@
             background: rgba(30, 30, 30, 0.95);
             backdrop-filter: blur(10px);
             border-bottom: 1px solid #333;
-            padding: 20px 0;
+            padding: 5px 0;
             position: sticky;
             top: 0;
             z-index: 100;
@@ -115,11 +115,18 @@
             transition: all 0.3s ease;
             text-decoration: none;
             font-size: 1rem;
+            outline: none;
+            text-align: center;
         }
         
         .btn:hover {
             background: #e0e0e0;
             transform: translateY(-2px);
+        }
+        
+        /* Убираем outline при фокусе на кнопках */
+        .btn:focus {
+            outline: none;
         }
         
         .section-title {
@@ -139,7 +146,7 @@
             width: 60px;
             height: 2px;
             background: #ffffff;
-        }    
+        }
         
         .products {
             display: grid;
@@ -157,6 +164,13 @@
             display: flex;
             flex-direction: column;
             height: 100%;
+            cursor: pointer;
+            outline: none;
+        }
+        
+        /* Убираем outline при фокусе на карточке товара */
+        .product-card:focus {
+            outline: none;
         }
         
         .product-card:hover {
@@ -165,8 +179,14 @@
             border-color: #555;
         }
         
+        /* Анимация нажатия на карточку */
+        .product-card:active {
+            transform: translateY(-5px) scale(0.98);
+            transition: transform 0.1s ease;
+        }
+        
         .product-img {
-            height: 250px; /* Увеличил высоту фото */
+            height: 350px;
             background: #2d2d2d;
             display: flex;
             align-items: center;
@@ -177,7 +197,7 @@
         .product-img img {
             width: 100%;
             height: 100%;
-            object-fit: cover; /* Вернул cover */
+            object-fit: cover;
             transition: transform 0.5s;
         }
         
@@ -190,17 +210,24 @@
             display: flex;
             flex-direction: column;
             flex-grow: 1;
-            height: 60%;
         }
         
         .product-info .btn {
             margin-top: auto;
+            padding: 12px 30px;
             width: 100%;
             text-align: center;
             min-height: 44px;
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 1rem;
+        }
+        
+        /* Анимация нажатия на кнопку "Купить" */
+        .product-info .btn:active {
+            transform: scale(0.95);
+            transition: transform 0.1s ease;
         }
         
         .product-title {
@@ -208,26 +235,151 @@
             margin-bottom: 10px;
             color: #ffffff;
             font-weight: 500;
-        }
-        
-        .product-description {
-            color: #b0b0b0;
-            font-size: 0.9rem;
-            line-height: 1.5;
-            flex-grow: 1;
-            min-height: 72px;
-             /* Уменьшил отступ снизу */
+            min-height: 2.8em;
+            display: flex;
+            align-items: center;
         }
         
         .product-price {
             font-size: 1.3rem;
             font-weight: 600;
             color: #ffffff;
-            margin-bottom: 15px;
             min-height: 30px;
             display: flex;
             align-items: center;
-            /* Убрал margin-top */
+            margin-bottom: 10px;
+        }
+        
+        .info-hint {
+            font-size: 0.8rem;
+            color: #888;
+            margin-top: 5px;
+            text-align: center;
+            font-style: italic;
+            margin-bottom: 10px;
+        }
+        
+        /* Стили для модального окна */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .modal-overlay.active {
+            display: flex;
+        }
+        
+        .modal {
+            background: #1e1e1e;
+            border-radius: 12px;
+            max-width: 800px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            border: 1px solid #333;
+            position: relative;
+            animation: modalFadeIn 0.3s ease;
+        }
+        
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #333;
+            color: white;
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            transition: background 0.3s;
+        }
+        
+        .modal-close:hover {
+            background: #555;
+        }
+        
+        .modal-content {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .modal-img {
+            height: 500px;
+            background: #2d2d2d;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .modal-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .modal-info {
+            padding: 30px;
+        }
+        
+        .modal-title {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: #ffffff;
+            font-weight: 500;
+        }
+        
+        .modal-price {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 20px;
+        }
+        
+        .modal-description {
+            color: #b0b0b0;
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+        
+        .modal-actions {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .modal-actions .btn {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
         }
         
         .about {
@@ -325,6 +477,12 @@
             border-radius: 8px;
             color: #ffffff;
             font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: #ffffff;
         }
         
         .form-group textarea {
@@ -391,9 +549,8 @@
             color: #888;
             font-size: 0.9rem;
         }
-        
+
         /* ===== ОСНОВНЫЕ ИЗМЕНЕНИЯ ДЛЯ МОБИЛЬНОЙ ВЕРСИИ ===== */
-        
         @media (max-width: 768px) {
             .nav-container {
                 flex-direction: column;
@@ -405,11 +562,18 @@
             }
             
             .hero {
-                padding: 50px 20px;
+                padding: 40px 20px;
+                margin-bottom: 30px;
             }
             
             .hero h1 {
-                font-size: 2rem;
+                font-size: 1.8rem;
+                margin-bottom: 15px;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+                margin-bottom: 20px;
             }
             
             .about-content, .contact-content {
@@ -420,60 +584,100 @@
                 order: -1;
             }
             
-            .products {
-                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            /* Мобильная версия модального окна */
+            .modal {
+                max-height: 85vh;
+            }
+            
+            .modal-img {
+                height: 400px;
+            }
+            
+            .modal-info {
+                padding: 20px;
+            }
+            
+            .modal-title {
+                font-size: 1.5rem;
+            }
+            
+            .modal-actions {
+                flex-direction: column;
             }
         }
-        
+
         /* ===== ДЛЯ МАЛЕНЬКИХ МОБИЛЬНЫХ (2 ТОВАРА В СТРОКЕ) ===== */
         @media (max-width: 480px) {
+            .main-container {
+                padding: 20px 8px;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+                margin-bottom: 20px;
+                padding-bottom: 8px;
+            }
+            
             .products {
                 grid-template-columns: repeat(2, 1fr);
-                gap: 15px;
+                gap: 8px;
+                margin-bottom: 30px;
             }
             
             .product-card {
-                margin-bottom: 10px;
+                margin-bottom: 0;
                 min-height: 350px;
+                border-radius: 8px;
+            }
+            
+            .product-card:hover {
+                transform: translateY(-5px);
             }
             
             .product-img {
-                height: 160px; /* Увеличил на мобильных */
+                height: 200px;
             }
             
             .product-info {
-                padding: 15px;
+                padding: 12px;
+                flex-grow: 1;
+                display: flex;
+                flex-direction: column;
             }
             
             .product-title {
-                font-size: 1rem;
-                margin-bottom: 8px;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                white-space: nowrap;
-            }
-            
-            .product-description {
-                font-size: 0.8rem;
-                margin-bottom: 6px; /* Уменьшил на мобильных */
+                font-size: 0.95rem;
+                margin-bottom: 6px;
+                line-height: 1.2;
+                min-height: 2.8em;
                 display: -webkit-box;
-                -webkit-line-clamp: 3;
+                -webkit-line-clamp: 2;
                 -webkit-box-orient: vertical;
                 overflow: hidden;
-                min-height: 57px;
+                text-overflow: ellipsis;
             }
             
             .product-price {
                 font-size: 1.1rem;
-                margin-bottom: 10px;
-                min-height: 25px;
+                min-height: 22px;
+                margin-bottom: 5px;
             }
             
             .product-info .btn {
-                padding: 10px 15px;
-                font-size: 0.9rem;
+                padding: 8px 12px;
+                font-size: 0.85rem;
                 width: 100%;
-                min-height: 40px;
+                min-height: 36px;
+                border-radius: 6px;
+                margin-top: auto;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            
+            .info-hint {
+                font-size: 0.7rem;
+                margin-bottom: 5px;
             }
             
             .btn {
@@ -482,27 +686,123 @@
                 width: 100%;
             }
             
-            .section-title {
-                font-size: 1.5rem;
+            .hero {
+                padding: 30px 15px;
+                margin-bottom: 25px;
             }
             
             .hero h1 {
-                font-size: 1.8rem;
+                font-size: 1.5rem;
             }
             
             .hero p {
-                font-size: 1rem;
+                font-size: 0.95rem;
+                margin-bottom: 20px;
+            }
+            
+            .about, .contact {
+                padding: 25px 20px;
+                margin-bottom: 25px;
+            }
+            
+            /* Мобильная версия модального окна для маленьких экранов */
+            .modal {
+                max-height: 80vh;
+            }
+            
+            .modal-img {
+                height: 250px;
+            }
+            
+            .modal-title {
+                font-size: 1.3rem;
+            }
+            
+            .modal-price {
+                font-size: 1.2rem;
+            }
+            
+            .modal-description {
+                font-size: 0.9rem;
             }
         }
-        
+
         /* ===== ДЛЯ ОЧЕНЬ МАЛЕНЬКИХ ЭКРАНОВ ===== */
         @media (max-width: 360px) {
             .products {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 7px;
             }
             
             .product-card {
-                min-height: auto;
+                min-height: 320px;
+            }
+            
+            .product-img {
+                height: 130px;
+            }
+            
+            .product-info {
+                padding: 10px;
+            }
+            
+            .product-title {
+                font-size: 0.9rem;
+                min-height: 2.6em;
+            }
+            
+            .product-price {
+                font-size: 1rem;
+            }
+            
+            .product-info .btn {
+                padding: 7px 10px;
+                font-size: 0.8rem;
+                min-height: 34px;
+            }
+        }
+
+        /* ===== ДЛЯ ЭКСТРЕМАЛЬНО УЗКИХ ЭКРАНОВ ===== */
+        @media (max-width: 320px) {
+            .products {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+            
+            .product-card {
+                min-height: 300px;
+            }
+            
+            .product-img {
+                height: 120px;
+            }
+            
+            .product-title {
+                font-size: 0.85rem;
+                -webkit-line-clamp: 2;
+                min-height: 2.4em;
+            }
+            
+            .product-info .btn {
+                padding: 6px 8px;
+                font-size: 0.78rem;
+                min-height: 32px;
+            }
+        }
+
+        /* ===== ДЛЯ ПЛАНШЕТОВ ===== */
+        @media (min-width: 481px) and (max-width: 768px) {
+            .products {
+                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+                gap: 10px;
+            }
+            
+            .product-card {
+                min-height: 340px;
+            }
+            
+            .product-img {
+                height: 180px;
             }
         }
     </style>
@@ -517,13 +817,10 @@
             <nav>
                 <ul>
                     <li><a href="#catalog">Каталог</a></li>
-                    <li><a href="#about">О нас</a></li>
+                    <li><a href="#about">3D-печать</a></li>
                     <li><a href="#contact">Контакты</a></li>
                 </ul>
             </nav>
-            <div class="user-info">
-                Качественная 3D-печать
-            </div>
         </div>
     </header>
 
@@ -542,80 +839,80 @@
             
             <div class="products">
                 <!-- Товар 1 -->
-                <div class="product-card">
+                <div class="product-card" data-product-id="1" data-buy-link="https://www.avito.ru/lipetsk/mebel_i_interer/statuetka_siluet_dueta_7855111857">
                     <div class="product-img">
                         <img src="/static/ing_tovar/20251221_162553.jpg" alt="Геометрическая ваза">
                     </div>
                     <div class="product-info">
                         <h3 class="product-title">Фигурка «Силуэт дуэта»</h3>
-                        <p class="product-description">Стильная 3D-статуэтка с абстрактными фигурами, создающими форму сердца. Универсальный элемент декора для дома или офиса.</p>
                         <div class="product-price">390 руб.</div>
-                        <button class="btn">Купить</button>
+                        <div class="info-hint">Нажмите для подробностей</div>
+                        <a href="https://www.avito.ru/lipetsk/mebel_i_interer/statuetka_siluet_dueta_7855111857" class="btn" target="_blank">Купить</a>
                     </div>
                 </div>
                 
                 <!-- Товар 2 -->
-                <div class="product-card">
+                <div class="product-card" data-product-id="2" data-buy-link="https://www.avito.ru/lipetsk/mebel_i_interer/statuetka_ellegiya_koshki_7855851765">
                     <div class="product-img">
                         <img src="/static/ing_tovar/20251221_163659.jpg" alt="Держатель для наушников">
                     </div>
                     <div class="product-info">
                         <h3 class="product-title">Фигурка «Элегия кошки»</h3>
-                        <p class="product-description">Фигурка кошки, созданная на 3D-принтере. Компактная, но очень выразительная. Идеальный мини-декор для дома или офиса.</p>
                         <div class="product-price">370 руб.</div>
-                        <button class="btn">Купить</button>
+                        <div class="info-hint">Нажмите для подробностей</div>
+                        <a href="https://www.avito.ru/lipetsk/mebel_i_interer/statuetka_ellegiya_koshki_7855851765" class="btn" target="_blank">Купить</a>
                     </div>
                 </div>
                 
                 <!-- Товар 3 -->
-                <div class="product-card">
+                <div class="product-card" data-product-id="3" data-buy-link="https://www.avito.ru/lipetsk/mebel_i_interer/statuetka_homyaka_7855758099">
                     <div class="product-img">
                         <img src="/static/ing_tovar/20251221_164013.jpg" alt="Органайзер для инструментов">
                     </div>
                     <div class="product-info">
                         <h3 class="product-title">Фигурка «Хомяк»</h3>
-                        <p class="product-description">Фигурка хомяка, напечатанная на 3D-принтере. Поставьте на полку, рабочий стол или витрину — и пространство заиграет новыми красками!</p>
                         <div class="product-price">350 руб.</div>
-                        <button class="btn">Купить</button>
+                        <div class="info-hint">Нажмите для подробностей</div>
+                        <a href="https://www.avito.ru/lipetsk/mebel_i_interer/statuetka_homyaka_7855758099" class="btn" target="_blank">Купить</a>
                     </div>
                 </div>
                 
                 <!-- Товар 4 -->
-                <div class="product-card">
+                <div class="product-card" data-product-id="4" data-buy-link="https://www.avito.ru/lipetsk/mebel_i_interer/lampa_iz_minecraft_7855012831">
                     <div class="product-img">
                         <img src="/static/ing_tovar/20251221_164514.jpg" alt="Архитектурная модель">
                     </div>
                     <div class="product-info">
                         <h3 class="product-title">Лампа из «Minecraft»</h3>
-                        <p class="product-description">Ночник в стиле Minecraft — идеальный подарок для любителя игры. Компактная лампа с электронной свечкой добавит уюта и перенесёт в мир кубических приключений.</p>
                         <div class="product-price">389 руб.</div>
-                        <button class="btn">Купить</button>
+                        <div class="info-hint">Нажмите для подробностей</div>
+                        <a href="https://www.avito.ru/lipetsk/mebel_i_interer/lampa_iz_minecraft_7855012831" class="btn" target="_blank">Купить</a>
                     </div>
                 </div>
                 
                 <!-- Товар 5 -->
-                <div class="product-card">
+                <div class="product-card" data-product-id="5" data-buy-link="https://www.avito.ru/lipetsk/mebel_i_interer/lampa_v_kitayskom_stile_7855351832">
                     <div class="product-img">
                         <img src="/static/ing_tovar/20251221_165037.jpg" alt="Светильник">
                     </div>
                     <div class="product-info">
                         <h3 class="product-title">Лампа в Китайском стиле</h3>
-                        <p class="product-description">Декоративный свет с восточным шармом: фонарь в китайском стиле, изготовленный на 3D-принтере. Станет стильным элементом вашего интерьера.</p>
                         <div class="product-price">399 руб.</div>
-                        <button class="btn">Купить</button>
+                        <div class="info-hint">Нажмите для подробностей</div>
+                        <a href="https://www.avito.ru/lipetsk/mebel_i_interer/lampa_v_kitayskom_stile_7855351832" class="btn" target="_blank">Купить</a>
                     </div>
                 </div>
                 
                 <!-- Товар 6 -->
-                <div class="product-card">
+                <div class="product-card" data-product-id="6" data-buy-link="https://www.avito.ru/lipetsk/mebel_i_interer/figurka_razlom_7855599015">
                     <div class="product-img">
                         <img src="/static/ing_tovar/20251221_165418.jpg" alt="Док-станция для телефона">
                     </div>
                     <div class="product-info">
                         <h3 class="product-title">Фигурка «Разлом»</h3>
-                        <p class="product-description">Фигурка «Разлом» — необычный декоративный элемент, напечатанный на 3D принтере. Отлично подойдёт для полки или стола, добавит интерьеру индивидуальности без лишних деталей.</p>
                         <div class="product-price">499 руб.</div>
-                        <button class="btn">Купить</button>
+                        <div class="info-hint">Нажмите для подробностей</div>
+                        <a href="https://www.avito.ru/lipetsk/mebel_i_interer/figurka_razlom_7855599015" class="btn" target="_blank">Купить</a>
                     </div>
                 </div>
             </div>
@@ -623,17 +920,19 @@
 
         <!-- О компании -->
         <section class="about" id="about">
-            <h2 class="section-title">О нашей компании</h2>
+            <h2 class="section-title">О 3D-печати</h2>
             <div class="about-content">
                 <div class="about-text">
-                    <p>Мы специализируемся на создании уникальных изделий с использованием передовых технологий 3D-печати. Наша команда дизайнеров и инженеров работает над тем, чтобы превратить ваши идеи в реальность.</p>
-                    <p>Мы используем только качественные материалы и современное оборудование, что позволяет нам создавать продукты с высокой детализацией и долговечностью.</p>
-                    <a href="#contact" class="btn">Связаться с нами</a>
+                    <p>Я создаю предметы для интерьера, используя технологию 3D-печати. Производство ведётся на принтере Creality Ender-3 SE.</p>
+                    
+                    <p>Одна из особенностей моих работ — статуэтки, напечатанные с технологией «нечёткой оболочки». Этот метод создаёт на поверхности особую матовую фактуру, которая скрывает технические слои печати. Каждая деталь получается уникальной, с собственной текстурой.</p>
+                    
+                    <p>Отдельное направление — декоративные ночники. В них установлен светодиодный модуль на батарейках, который можно легко заменить. Тёплый рассеянный свет создаёт спокойную и уютную атмосферу в вечернее время, делая эти светильники практичным и эстетичным элементом интерьера.</p>
+                    
+                    <a href="#catalog" class="btn">Смотреть каталог</a>
                 </div>
-                
             </div>
         </section>
-
         <!-- Контакты -->
         <section class="contact" id="contact">
             <h2 class="section-title">Контакты</h2>
@@ -641,10 +940,10 @@
             <div class="contact-content">
                 <div class="contact-info">
                     <h3>Свяжитесь с нами</h3>
-                    <p>Телефон: +7 (999) 123-45-67</p>
-                    <p>Email: info@3dprintgallery.ru</p>
-                    <p>Адрес: г. Москва, ул. Технологическая, д. 15</p>
-                    <p>Режим работы: Пн-Пт: 9:00-18:00</p>
+                    <p>Телефон: +7 (950) 800-16-22</p>
+                    <p>Email: Farbi89@yandex.com</p>
+                    <p>Telegram: @Qwp898</p>
+                    <p>Режим работы: Пн-Вс: 8:00-20:00</p>
                 </div>
                 
                 <div class="contact-form">
@@ -661,7 +960,7 @@
                         
                         <div class="form-group">
                             <label for="message">Сообщение</label>
-                            <textarea id="message" name="mesg" required></textarea>
+                            <textarea id="message" name="message" required></textarea>
                         </div>
                         
                         <button type="submit" class="btn">Отправить сообщение</button>
@@ -675,8 +974,8 @@
     <footer>
         <div class="footer-content">
             <div class="footer-column">
-                <h3>3D Print Gallery</h3>
-                <p>Создаем уникальные изделия с помощью 3D-печати. Качество, инновации и креативность.</p>
+                <h3>3D Gallery</h3>
+                <p>Создаем уникальные изделия с помощью 3D-печати.</p>
             </div>
         </div>
         
@@ -684,5 +983,197 @@
             <p>&copy; 2026 3D Gallery. Все права защищены.</p>
         </div>
     </footer>
+
+    <!-- Модальное окно для товаров -->
+    <div class="modal-overlay" id="productModal">
+        <div class="modal">
+            <button class="modal-close" id="modalClose">&times;</button>
+            <div class="modal-content">
+                <div class="modal-img">
+                    <img id="modalImage" src="" alt="">
+                </div>
+                <div class="modal-info">
+                    <h2 class="modal-title" id="modalTitle"></h2>
+                    <div class="modal-price" id="modalPrice"></div>
+                    <p class="modal-description" id="modalDescription"></p>
+                    <div class="modal-actions">
+                        <a href="" class="btn" id="modalBuyLink" target="_blank">Купить</a>
+                        <button class="btn" id="modalCloseBtn" style="background: #333; color: white;">Закрыть</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Данные товаров
+        const products = {
+            1: {
+                title: "Фигурка «Силуэт дуэта»",
+                price: "390 руб.",
+                image: "/static/ing_tovar/20251221_162553.jpg",
+                description: "Стильная 3D-статуэтка с абстрактными фигурами, создающими форму сердца. Универсальный элемент декора для дома или офиса."
+            },
+            2: {
+                title: "Фигурка «Элегия кошки»",
+                price: "370 руб.",
+                image: "/static/ing_tovar/20251221_163659.jpg",
+                description: "Фигурка кошки, созданная на 3D-принтере. Компактная, но очень выразительная. Идеальный мини-декор для дома или офиса."
+            },
+            3: {
+                title: "Фигурка «Хомяк»",
+                price: "350 руб.",
+                image: "/static/ing_tovar/20251221_164013.jpg",
+                description: "Фигурка хомяка, напечатанная на 3D-принтере. Поставьте на полку, рабочий стол или витрину — и пространство заиграет новыми красками!"
+            },
+            4: {
+                title: "Лампа из «Minecraft»",
+                price: "389 руб.",
+                image: "/static/ing_tovar/20251221_164514.jpg",
+                description: "Ночник в стиле Minecraft — идеальный подарок для любителя игры. Компактная лампа с электронной свечкой добавит уюта и перенесёт в мир кубических приключений."
+            },
+            5: {
+                title: "Лампа в Китайском стиле",
+                price: "399 руб.",
+                image: "/static/ing_tovar/20251221_165037.jpg",
+                description: "Декоративный свет с восточным шармом: фонарь в китайском стиле, изготовленный на 3D-принтере. Станет стильным элементом вашего интерьера."
+            },
+            6: {
+                title: "Фигурка «Разлом»",
+                price: "499 руб.",
+                image: "/static/ing_tovar/20251221_165418.jpg",
+                description: "Фигурка «Разлом» — необычный декоративный элемент, напечатанный на 3D принтере. Отлично подойдёт для полки или стола, добавит интерьеру индивидуальности без лишних деталей."
+            }
+        };
+
+        // Элементы DOM
+        const modal = document.getElementById('productModal');
+        const modalClose = document.getElementById('modalClose');
+        const modalCloseBtn = document.getElementById('modalCloseBtn');
+        const modalImage = document.getElementById('modalImage');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalPrice = document.getElementById('modalPrice');
+        const modalDescription = document.getElementById('modalDescription');
+        const modalBuyLink = document.getElementById('modalBuyLink');
+
+        // Плавная прокрутка к якорям
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (!targetElement) return;
+                
+                // Вычисляем позицию элемента с учетом фиксированной шапки
+                const headerHeight = document.querySelector('.header').offsetHeight;
+                const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+                
+                // Плавная прокрутка
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Открытие модального окна при клике на карточку
+        document.querySelectorAll('.product-card').forEach(card => {
+            card.addEventListener('click', function(e) {
+                // Предотвращаем открытие модального окна при клике на кнопку "Купить"
+                if (e.target.classList.contains('btn') || e.target.closest('.btn')) {
+                    return;
+                }
+                
+                const productId = this.getAttribute('data-product-id');
+                const product = products[productId];
+                const buyLink = this.getAttribute('data-buy-link');
+                
+                if (product) {
+                    modalImage.src = product.image;
+                    modalTitle.textContent = product.title;
+                    modalPrice.textContent = product.price;
+                    modalDescription.textContent = product.description;
+                    
+                    // Устанавливаем ссылку для кнопки "Купить" в модальном окне
+                    modalBuyLink.href = buyLink;
+                    
+                    openModal();
+                }
+            });
+        });
+
+        // Закрытие модального окна
+        function closeModal() {
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function openModal() {
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Обработчики закрытия
+        modalClose.addEventListener('click', closeModal);
+        modalCloseBtn.addEventListener('click', closeModal);
+
+        // Закрытие при клике на фон
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+
+        // Закрытие по клавише ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && modal.classList.contains('active')) {
+                closeModal();
+            }
+        });
+
+        // Убираем outline при клике на карточки товаров и кнопки
+        document.querySelectorAll('.product-card, .btn').forEach(element => {
+            element.addEventListener('mousedown', function() {
+                this.style.outline = 'none';
+            });
+            
+            element.addEventListener('focus', function() {
+                this.style.outline = 'none';
+            });
+        });
+
+        // Анимация нажатия для карточек товаров
+        document.querySelectorAll('.product-card').forEach(card => {
+            card.addEventListener('mousedown', function() {
+                this.style.transform = 'translateY(-5px) scale(0.98)';
+            });
+            
+            card.addEventListener('mouseup', function() {
+                this.style.transform = '';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = '';
+            });
+        });
+
+        // Анимация нажатия для кнопок "Купить"
+        document.querySelectorAll('.product-info .btn').forEach(btn => {
+            btn.addEventListener('mousedown', function() {
+                this.style.transform = 'scale(0.95)';
+            });
+            
+            btn.addEventListener('mouseup', function() {
+                this.style.transform = '';
+            });
+            
+            btn.addEventListener('mouseleave', function() {
+                this.style.transform = '';
+            });
+        });
+    </script>
 </body>
 </html>
