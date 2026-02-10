@@ -82,7 +82,7 @@ def index():
 def send_message():
     namee = request.form.get("name")
     email = request.form.get("email")
-    mesg = request.form.get("mesg")
+    mesg = request.form.get("message")
     message_text = f"Заявка с сайта 3д печати:\nИмя: {namee}\nПочта: {email}\nСообщение: {mesg}"
     message_queue.put(message_text)
     print(f"Сообщение в очереди: {message_text}")
